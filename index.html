@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stair Platform Designer</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="app-header">
+      <div>
+        <h1>Stair Platform Designer</h1>
+        <p>Practical planning tool for modular staircase work platforms.</p>
+      </div>
+      <div class="warning-banner">
+        <strong>Planning tool only.</strong>
+        <span>Verify stability, bracing, safe footing, and assembly before use. Not certified scaffolding advice.</span>
+      </div>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar">
+        <h2>Workflow</h2>
+        <ol>
+          <li>Choose approach</li>
+          <li>Select staircase</li>
+          <li>Enter stair details</li>
+          <li>Configure modules</li>
+          <li>Configure legs & pockets</li>
+          <li>Review materials</li>
+          <li>Print summary</li>
+        </ol>
+
+        <div class="confidence-card" id="confidenceCard">
+          <h3>Design confidence</h3>
+          <p class="confidence-level">Works</p>
+          <p class="confidence-detail" id="confidenceDetail"></p>
+          <ul id="confidenceTips"></ul>
+        </div>
+      </aside>
+
+      <section class="content">
+        <div class="panel">
+          <h2>1) Choose approach</h2>
+          <div class="inline-grid two">
+            <label class="option-card">
+              <input type="radio" name="mode" value="quick" checked />
+              <span>
+                <strong>Quick design</strong>
+                <small>Minimal inputs, immediate practical recommendation.</small>
+              </span>
+            </label>
+            <label class="option-card">
+              <input type="radio" name="mode" value="detailed" />
+              <span>
+                <strong>Detailed stair design</strong>
+                <small>More geometry and placement detail for better fit.</small>
+              </span>
+            </label>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>2) Stair type</h2>
+          <div class="inline-grid three" id="stairTypeCards"></div>
+        </div>
+
+        <div class="panel">
+          <h2>3) Stair setup</h2>
+          <div class="inline-grid three">
+            <label>Step rise (mm)<input type="number" id="stepRise" /></label>
+            <label>Tread depth (mm)<input type="number" id="treadDepth" /></label>
+            <label>Stair width (mm)<input type="number" id="stairWidth" /></label>
+            <label>Step count<input type="number" id="stepCount" /></label>
+            <label>Stairwell width (mm)<input type="number" id="stairwellWidth" /></label>
+            <label>Landing depth (mm)<input type="number" id="landingDepth" /></label>
+          </div>
+          <details>
+            <summary>Advanced stair details</summary>
+            <div class="inline-grid three advanced-fields">
+              <label>Landing width (mm)<input type="number" id="landingWidth" /></label>
+              <label>Wall offset left (mm)<input type="number" id="wallOffsetLeft" /></label>
+              <label>Wall offset right (mm)<input type="number" id="wallOffsetRight" /></label>
+              <label>Narrow section width (mm)<input type="number" id="narrowWidth" /></label>
+              <label>Handrail clearance (mm)<input type="number" id="handrailClearance" /></label>
+              <label>Turn direction
+                <select id="turnDirection">
+                  <option value="left">Left</option>
+                  <option value="right">Right</option>
+                </select>
+              </label>
+            </div>
+          </details>
+        </div>
+
+        <div class="panel">
+          <h2>4) Platform modules</h2>
+          <button id="addModuleBtn" class="btn">Add module</button>
+          <div id="modulesContainer"></div>
+        </div>
+
+        <div class="panel">
+          <h2>5) Legs & pockets</h2>
+          <div class="inline-grid three">
+            <label>Height strategy
+              <select id="legStrategy">
+                <option value="auto-step">Auto from stair rise</option>
+                <option value="auto-grouped">Auto grouped steps</option>
+                <option value="manual">Manual entry</option>
+              </select>
+            </label>
+            <label>Typical legs in use<input type="number" id="typicalLegsInUse" min="3" max="8" /></label>
+            <label>Manual heights (mm, comma separated)
+              <input type="text" id="manualHeights" placeholder="380, 560, 760" />
+            </label>
+          </div>
+          <div id="legsSummary"></div>
+        </div>
+
+        <div class="panel">
+          <h2>6) Visual previews</h2>
+          <div class="preview-grid">
+            <article>
+              <h3>Stair plan + modules</h3>
+              <svg id="stairPlan" viewBox="0 0 800 350"></svg>
+            </article>
+            <article>
+              <h3>Selected module top view</h3>
+              <svg id="moduleTop" viewBox="0 0 500 280"></svg>
+            </article>
+            <article>
+              <h3>Selected module underside</h3>
+              <svg id="moduleUnder" viewBox="0 0 500 280"></svg>
+            </article>
+            <article>
+              <h3>Leg heights vs stair rise (left = longest)</h3>
+              <svg id="legSide" viewBox="0 0 500 280"></svg>
+            </article>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>7) Output</h2>
+          <div class="output-grid">
+            <article>
+              <h3>Platform summary</h3>
+              <div id="platformSummary"></div>
+            </article>
+            <article>
+              <h3>Bill of materials</h3>
+              <div id="bom"></div>
+            </article>
+            <article>
+              <h3>Cut list</h3>
+              <div id="cutList"></div>
+            </article>
+            <article>
+              <h3>Design notes & warnings</h3>
+              <ul id="notes"></ul>
+            </article>
+          </div>
+          <button class="btn" onclick="window.print()">Print summary</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
